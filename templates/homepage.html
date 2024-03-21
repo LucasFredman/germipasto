@@ -3,8 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(100deg, #ffffff, #358835);
+            background-size: 400% 400%;
+            animation: gradientAnimation 8s infinite alternate;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .card {
+            width: 80%;
+            max-width: 400px;
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-container {
+            width: 80%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        img {
+            width: 90%;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+           margin-bottom: -20px;
+        }
+
+        #resultadoVolume,
+        #resultadoVelocidade {
+            font-weight: bold;
+            color: #FF5733; /* Cor destacada */
+        }
+    </style>
 </head>
 <body>
-    <p>Esse é meu 1º site. Lira, já me inscrevi no canal</p>
+<div class="card-container">
+    <img src="https://cdn.discordapp.com/attachments/1200173845391364207/1220451169495941140/c626d67f977b2d631d61263e9b95d04a36b194cafe3a44451f09c15e9eeeeea3.png?ex=660efcb9&is=65fc87b9&hm=fb8ce6376581675da6cf1219c30a5bc6037df2e73530d9f5119da0887371bada&" alt="Imagem acima do card">
+<div class="card">
+    <h2>Cálculo da Velocidade de Trabalho</h2>
+    <p>Dist. Percorrida: <input type="number" id="distancia" placeholder="Digite a distância"> metros</p>
+    <p>Tempo p/ percorrer: <input type="number" id="tempo" placeholder="Digite o tempo"> segundos</p>
+    <p>Velocidade de Trabalho: <span id="resultadoVelocidade"></span> Km/h</p>
+    <hr>
+    <h2>Cálculo da Vazão de Sementes</h2>
+    <p>Largura de trabalho: <input type="number" id="largura" placeholder="Digite a largura"> metros</p>
+    <p>Taxa de aplicação: <input type="number" id="taxa" placeholder="Digite a taxa"> kg/ha</p>
+    <p>Velocidade de Trabalho: <span id="resultadoVelocidade2"></span> Km/h</p>
+    <p>Volume à ser coletado <span style="font-weight:bold">(em 2 minutos)</span>: <span id="resultadoVolume"></span> kg</p>
+    <hr>
+    <p>Todos os direitos reservados à Germipasto.</p>
+</div>
+</div>
+<script>
+    const distanciaInput = document.getElementById('distancia');
+    const tempoInput = document.getElementById('tempo');
+    const resultadoVelocidade = document.getElementById('resultadoVelocidade');
+    const resultadoVelocidade2 = document.getElementById('resultadoVelocidade2');
+    const larguraInput = document.getElementById('largura');
+    const taxaInput = document.getElementById('taxa');
+    const resultadoVolume = document.getElementById('resultadoVolume');
+
+    distanciaInput.addEventListener('input', calcularVelocidade);
+    tempoInput.addEventListener('input', calcularVelocidade);
+    larguraInput.addEventListener('input', calcularVolume);
+    taxaInput.addEventListener('input', calcularVolume);
+    resultadoVelocidade2.addEventListener('input', calcularVolume);
+
+    function calcularVelocidade() {
+        const distancia = parseFloat(distanciaInput.value);
+        const tempo = parseFloat(tempoInput.value);
+
+        if (!isNaN(distancia) && !isNaN(tempo) && tempo !== 0) {
+            const velocidade = (distancia / tempo) * 3.6; // Convertendo para km/h
+            resultadoVelocidade.textContent = velocidade.toFixed(2);
+            resultadoVelocidade2.textContent = velocidade.toFixed(2);
+        } else {
+            resultadoVelocidade.textContent = '';
+            resultadoVelocidade2.textContent = '';
+        }
+    }
+
+    function calcularVolume() {
+        const largura = parseFloat(larguraInput.value);
+        const taxa = parseFloat(taxaInput.value);
+        const velocidade = parseFloat(resultadoVelocidade2.textContent);
+
+        if (!isNaN(largura) && !isNaN(taxa) && !isNaN(velocidade)) {
+            const volume = 2 * ((1.657 * taxa * largura * velocidade * 0.93) / 1000);
+            resultadoVolume.textContent = volume.toFixed(2);
+        } else {
+            resultadoVolume.textContent = '';
+        }
+    }
+</script>
+
 </body>
 </html>
