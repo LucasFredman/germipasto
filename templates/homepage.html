@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Germipasto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -11,9 +12,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(100deg, #ffffff, #358835);
+            background: linear-gradient(100deg, #c6ffd4, #358835);
             background-size: 400% 400%;
             animation: gradientAnimation 8s infinite alternate;
+            font-family: 'Nunito', sans-serif; /* Aplica a fonte Nunito ao corpo */
         }
 
         @keyframes gradientAnimation {
@@ -47,6 +49,20 @@
            margin-bottom: -20px;
         }
 
+        input[type="number"] {
+            width: 60px; /* Ajuste o comprimento conforme desejado */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adiciona a sombra */
+            transition: box-shadow 0.3s ease; /* Adiciona transição suave */
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(81, 203, 238, 1); /* Adiciona sombra quando em foco */
+        }
+
         #resultadoVolume,
         #resultadoVelocidade {
             font-weight: bold;
@@ -58,15 +74,15 @@
 <div class="card-container">
     <img src="https://cdn.discordapp.com/attachments/1200173845391364207/1220451169495941140/c626d67f977b2d631d61263e9b95d04a36b194cafe3a44451f09c15e9eeeeea3.png?ex=660efcb9&is=65fc87b9&hm=fb8ce6376581675da6cf1219c30a5bc6037df2e73530d9f5119da0887371bada&" alt="Imagem acima do card">
 <div class="card">
-    <h2>Cálculo da Velocidade de Trabalho</h2>
-    <p>Dist. Percorrida: <input type="number" id="distancia" placeholder="Digite a distância"> metros</p>
-    <p>Tempo p/ percorrer: <input type="number" id="tempo" placeholder="Digite o tempo"> segundos</p>
+    <h3>Cálculo da Velocidade de Trabalho</h3>
+    <p>Dist. Percorrida: <input type="number" id="distancia" placeholder="Digite"> metros</p>
+    <p>Tempo p/ percorrer: <input type="number" id="tempo" placeholder="Digite"> segundos</p>
     <p>Velocidade de Trabalho: <span id="resultadoVelocidade"></span> Km/h</p>
     <hr>
-    <h2>Cálculo da Vazão de Sementes</h2>
-    <p>Largura de trabalho: <input type="number" id="largura" placeholder="Digite a largura"> metros</p>
-    <p>Taxa de aplicação: <input type="number" id="taxa" placeholder="Digite a taxa"> kg/ha</p>
-    <p>Velocidade de Trabalho: <span id="resultadoVelocidade2"></span> Km/h</p>
+    <h3>Cálculo da Vazão de Sementes</h3>
+    <p>Largura de trabalho: <input type="number" id="largura" placeholder="Digite"> metros</p>
+    <p>Taxa de aplicação: <input type="number" id="taxa" placeholder="Digite"> kg/ha</p>
+    <p>Velocidade de Trabalho: <input type="number" id="resultadoVelocidade2" placeholder="Digite"> Km/h</p>
     <p>Volume à ser coletado <span style="font-weight:bold">(em 2 minutos)</span>: <span id="resultadoVolume"></span> kg</p>
     <hr>
     <p>Todos os direitos reservados à Germipasto.</p>
@@ -94,17 +110,17 @@
         if (!isNaN(distancia) && !isNaN(tempo) && tempo !== 0) {
             const velocidade = (distancia / tempo) * 3.6; // Convertendo para km/h
             resultadoVelocidade.textContent = velocidade.toFixed(2);
-            resultadoVelocidade2.textContent = velocidade.toFixed(2);
+
         } else {
             resultadoVelocidade.textContent = '';
-            resultadoVelocidade2.textContent = '';
+
         }
     }
 
     function calcularVolume() {
         const largura = parseFloat(larguraInput.value);
         const taxa = parseFloat(taxaInput.value);
-        const velocidade = parseFloat(resultadoVelocidade2.textContent);
+        const velocidade = parseFloat(resultadoVelocidade2.value);
 
         if (!isNaN(largura) && !isNaN(taxa) && !isNaN(velocidade)) {
             const volume = 2 * ((1.657 * taxa * largura * velocidade * 0.93) / 1000);
